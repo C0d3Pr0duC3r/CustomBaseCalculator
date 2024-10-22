@@ -1,7 +1,7 @@
 import string
 
-base26 = list(range(10))+list(string.ascii_lowercase)
-print(base26)
+base26 = list(map(str, range(10))) + list(string.ascii_lowercase)
+
 class CustomBase:
     def __init__(self, base: int, symbols=base26):
         # base defines the numbersystem
@@ -9,16 +9,15 @@ class CustomBase:
         self.base = base
         self.symbols = symbols
 
-    def show(self):
-        # prints the number to the screen
+    def show(self, number):
+        print(f"decimal representation: {self.convert_to_dec(number)}, {self.base}-representation: {number}")
+
+    def convert_to_dec(self, number):
+        # Converts the n-based number into decimal
         pass
 
-    def convert_to_dec(self):
-        # converts the n-based number into a decimal
-        pass
-
-    def convert_to_base(self):
-        # converts the number to the n-based
+    def convert_to_base(self, decimal):
+        #
         pass
 
 
