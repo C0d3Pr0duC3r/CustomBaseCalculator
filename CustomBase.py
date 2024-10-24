@@ -1,4 +1,5 @@
 import string
+
 base26 = list(map(str, range(10))) + list(string.ascii_uppercase)
 class CustomBase:
     def __init__(self, base: int, symbols=base26):
@@ -6,10 +7,6 @@ class CustomBase:
         # symbols is to be used if base is bigger than 10
         self.base = base
         self.symbols = symbols
-
-    def show(self):
-        # prints the number to the screen
-        pass
 
     def convert_to_dec(self, base_number):
 
@@ -47,16 +44,10 @@ class CustomBase:
         return ''.join(reversed(digits))
 
 
+class Number:
+    def __init__(self, base, value):
+        self.base = CustomBase(base)
+        self.value = value
 
-
-
-#8/2 4/2 2/2 1/2
-binary = CustomBase(2)
-
-hex = CustomBase(16)
-
-print(binary.convert_to_base(127))
-
-print(binary.convert_to_dec(1010100))
-
-print(hex.convert_to_base(1232))
+    def show(self):
+        print(f"decimal: {self.value}; {self.base.base}-base representation: {self.base.convert_to_base(self.value)}")
