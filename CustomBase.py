@@ -51,3 +51,13 @@ class Number:
 
     def show(self):
         print(f"decimal: {self.value}; {self.base.base}-base representation: {self.base.convert_to_base(self.value)}")
+
+class Calculator:
+    pass
+
+# List comprehension to generate all numbers in base 3
+base_3_numbers = [Number(3, num) for num in range(3)]
+
+# check
+for num in base_3_numbers:
+    num.show()
