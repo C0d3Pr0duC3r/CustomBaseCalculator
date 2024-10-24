@@ -1,6 +1,10 @@
 import string
 
 base26 = list(map(str, range(10))) + list(string.ascii_uppercase)
+
+# TODO negative base numbers need to work
+# TODO maybe fraction base numbers???
+
 class CustomBase:
     def __init__(self, base: int, symbols=base26):
         # base defines the numbersystem
@@ -22,7 +26,7 @@ class CustomBase:
 
         return decimal_value
 
-    def convert_to_base(self, dec):
+    def convert_to_base(self, dec, let_me_see=True):
         """
         dec // self.base = new_dec
         dec % self.base = last_digit
@@ -35,13 +39,19 @@ class CustomBase:
             return "0"
 
         digits = []
-        while dec > 0:
+        if self.base > 0:
+            while dec > 0:
+                if let_me_see:
+                    print(f"dec= {dec}")
+                    print(f"dec // base => {dec} % {self.base} = {dec // self.base}")
+                    print(f"dec % base => {dec} % {self.base} = {dec % self.base}")
+                    print(f"==> {dec // self.base}, R: {dec % self.base}")
+                    print("-"*12)
 
-            digits.append(self.symbols[dec % self.base])
-            dec //= self.base
+                digits.append(self.symbols[dec % self.base])
+                dec //= self.base
 
-
-        return ''.join(reversed(digits))
+            return ''.join(reversed(digits))
 
 
 class Number:
@@ -52,12 +62,23 @@ class Number:
     def show(self):
         print(f"decimal: {self.value}; {self.base.base}-base representation: {self.base.convert_to_base(self.value)}")
 
+
 class Calculator:
-    pass
+    @staticmethod
+    def add(*numbers):
+        values = [number.value for number in numbers]
+        result_value = sum(values)
+        Number(numbers[0].base.base, result_value).show()
 
-# List comprehension to generate all numbers in base 3
-base_3_numbers = [Number(3, num) for num in range(3)]
 
-# check
-for num in base_3_numbers:
-    num.show()
+num1 = Number(3, 12)
+
+num2 = Number(3, 17)
+
+num1.show()
+
+num2.show()
+
+#result = Calculator.add(num1, num2)
+
+
