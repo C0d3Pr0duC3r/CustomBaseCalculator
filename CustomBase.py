@@ -4,6 +4,7 @@ base26 = list(map(str, range(10))) + list(string.ascii_uppercase)
 
 # TODO negative base numbers need to work
 # TODO maybe fraction base numbers???
+# Todo the calculator should hold the base, not the number itself
 
 class CustomBase:
     def __init__(self, base: int, symbols=base26):
@@ -26,7 +27,7 @@ class CustomBase:
 
         return decimal_value
 
-    def convert_to_base(self, dec, let_me_see=True):
+    def convert_to_base(self, dec, let_me_see=False):
         """
         dec // self.base = new_dec
         dec % self.base = last_digit
@@ -64,9 +65,12 @@ class Number:
 
 
 class Calculator:
+    def __init__(self, base):
+        self.base = base
     @staticmethod
     def add(*numbers):
         values = [number.value for number in numbers]
+        print(f"adding {values}...")
         result_value = sum(values)
         Number(numbers[0].base.base, result_value).show()
 
@@ -79,6 +83,6 @@ num1.show()
 
 num2.show()
 
-#result = Calculator.add(num1, num2)
+Calculator.add(num1, num2)
 
 
