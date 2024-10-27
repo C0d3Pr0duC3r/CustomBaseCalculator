@@ -34,13 +34,7 @@ class CustomBase:
         return decimal_value
 
     def convert_to_base(self, dec_value, let_me_see=True):
-        """
-        dec // self.base = new_dec
-        dec % self.base = last_digit
-        ...
-        new_dec // self.base = 0
-        new_dec % self.base = first_digit
-        """
+
         # keep a copy of dec_value to check later
         dec = dec_value
 
@@ -48,28 +42,28 @@ class CustomBase:
             return "0"
 
         digits = []
-        if self.base != 0:
-            while dec != 0:
-                if let_me_see:
-                    print(f"dec= {dec}")
-                    print(f"dec // base => {dec} // {self.base} = {dec // self.base}")
-                    print(f"dec % base => {dec} % {self.base} = {dec % self.base}")
-                    print(f"==> {dec // self.base}, R: {dec % self.base}")
-                    print("-" * 12)
+        while dec != 0:
 
-                digits.append(self.symbols[dec % self.base])
-                dec //= self.base
+            if let_me_see:
+                print(f"{dec} / {self.base} = {dec // self.base}, R: {dec % self.base}")
 
-                number = ''.join(reversed(digits))
+            dec, remainder = divmod(dec, self.base)
+            if remainder < 0:
+                remainder += abs(self.base)
+                dec += 1
 
-        elif self.base == 0:
-            print("base is 0 -> not defined")
+            digits.append(self.symbols[remainder])
+
+            number = ''.join(reversed(digits))
 
         if self.convert_to_dec(number) == dec_value:
+            print("success")
             return number
-
         else:
-            print("number conversion went wrong")
+            print(f"{self.convert_to_dec(number)} != {dec_value}")
+            print("something went wrong!")
+
+
 
 
 class Number:
@@ -79,18 +73,12 @@ class Number:
         self.base_value = self.base.convert_to_base(self.dec_value)
 
     def show(self):
-        return f"decimal: {self.dec_value}; {self.base.base} -base representation: {self.base_value}"
+        return f"decimal: {self.dec_value}; {self.base.base} - base representation: {self.base_value}"
 
 
 class Calculator:
     def __init__(self, calc_base=None):
         self.calc_base = calc_base
-
-    """def add(self, *numbers):
-        values = [number.dec_value for number in numbers]
-        print(f"adding {[number.base.convert_to_base(number.dec_value) for number in numbers]}, decimal representation {values} ...")
-        result_value = sum(values)
-        Number(numbers[0].base.base, result_value).show()"""
 
     def add(self, *dec_values: int):
         print(f"adding {[Number(self.calc_base, val).base_value for val in dec_values]} ...")
@@ -103,13 +91,7 @@ trinary_calculator = Calculator(3)
 
 hex_calculator = Calculator(16)
 
-negative_binary = Calculator(-2)
-
 binary = Calculator(2)
 
-binary.add(10)
 
-# trinary_calculator.add(12)
-
-
-# negative_binary.add(2)
+print(Number(-3, 42).show())
