@@ -5,8 +5,7 @@ base36 = tuple(map(str, range(10))) + tuple(string.ascii_uppercase)
 '''IMPORTANT: 36 is the highest possible base at the moment!'''
 
 
-# TODO negative base numbers need to work
-
+# TODO restructure the Number - CustomBase relationship
 class CustomBase:
     def __init__(self, base: int, symbols=base36):
         # base defines the numbersystem
@@ -64,8 +63,6 @@ class CustomBase:
             print("something went wrong!")
 
 
-
-
 class Number:
     def __init__(self, base, dec_value):
         self.base = CustomBase(base)
@@ -93,5 +90,5 @@ hex_calculator = Calculator(16)
 
 binary = Calculator(2)
 
-
 print(Number(-3, 42).show())
+print(Number(3, 42).show())
