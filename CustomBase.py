@@ -31,7 +31,7 @@ class CustomBaseNumber:
 
         return decimal_value
 
-    def convert_to_base(self, dec_value, let_me_see=True):
+    def convert_to_base(self, dec_value, let_me_see=False):
 
         check_value = dec_value  # keep original value, to check at the end
         if dec_value == 0:
@@ -89,11 +89,10 @@ class Calculator:
 
         print(f"adding {[value.show() for value in values]} ...")
         result_value = sum([value.to_decimal() for value in values])
-        print(CustomBaseNumber(self.calc_base, result_value).show())
+        CustomBaseNumber(self.calc_base, result_value).show()
         print("-"*12)
 
-    def show(self, number):
-        print(CustomBaseNumber(self.calc_base, number).show())
+
 
 
 trinary_calculator = Calculator(3)
@@ -101,4 +100,6 @@ trinary_calculator = Calculator(3)
 negative_trinary_calculator = Calculator(-3)
 
 
-trinary_calculator.add(-16)
+trinary_calculator.add(16, 23)
+
+negative_trinary_calculator.add(-16, 23)
