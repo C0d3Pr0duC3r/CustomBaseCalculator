@@ -4,91 +4,101 @@ base36 = tuple(map(str, range(10))) + tuple(string.ascii_uppercase)
 
 '''IMPORTANT: 36 is the highest possible base at the moment!'''
 
-
-# TODO restructure the Number - CustomBase relationship
-class CustomBase:
-    def __init__(self, base: int, symbols=base36):
-        # base defines the numbersystem
-        # symbols is to be used if base is bigger than 10
+class CustomBaseNumber:
+    def __init__(self, base: int, value, symbols=base36):
         self.base = base
         self.symbols = symbols
 
+        # check, if value is already in self.base (String) of if its a decimal (int)
+        if isinstance(value, int):
+            self.dec_value = value
+            self.base_value = self.convert_to_base(self.dec_value)
+        elif isinstance(value, str):
+            self.base_value = value
+            self.dec_value = self.convert_to_dec(self.base_value)
+        else:
+            raise ValueError("Value must be an integer (decimal) or string (in base representation)")
+
     def convert_to_dec(self, base_number):
-        # Konvertiere base_number in eine Liste von Zeichen
         base_number = list(str(base_number))
         decimal_value = 0
-        power = 0  # Zählt die Potenz der Basis
+        power = 0
 
-        # Iteriere durch die Ziffern von rechts nach links (umgekehrte Reihenfolge)
         for symbol in reversed(base_number):
-            # Hole den Index des Symbols in der `symbols`-Liste
             digit_value = self.symbols.index(symbol)
-
-            # Berechne den Stellenwert und addiere ihn zum Ergebnis
             decimal_value += digit_value * (self.base ** power)
-
-            # Erhöhe die Potenz für die nächste Stelle
             power += 1
 
         return decimal_value
 
     def convert_to_base(self, dec_value, let_me_see=True):
 
-        # keep a copy of dec_value to check later
-        dec = dec_value
-
-        if dec == 0:
+        check_value = dec_value  # keep original value, to check at the end
+        if dec_value == 0:
             return "0"
 
         digits = []
-        while dec != 0:
-
+        count = 0
+        while dec_value != 0:
+            count += 1
+            # Debug-Ausgabe, um die Schritte zu verfolgen
             if let_me_see:
-                print(f"{dec} / {self.base} = {dec // self.base}, R: {dec % self.base}")
+                see_dec, see_remainder = divmod(dec_value, self.base)
+                print(f"{dec_value} // {self.base} = {see_dec} R:{see_remainder}")
+            # Division und Rest berechnen
+            dec_value, remainder = divmod(dec_value, self.base)
 
-            dec, remainder = divmod(dec, self.base)
             if remainder < 0:
                 remainder += abs(self.base)
-                dec += 1
+                dec_value += 1
 
             digits.append(self.symbols[remainder])
+            '''if by accident or on purpose a negative number is put into a positive base calculator
+            this will ask the user if the program should be terminated'''
+            if count % 1000 == 0:
+                print(f"convert to base method ran {count}-times, suspected infinite loop, abort?")
+                usr_in = input("(Y/N)>_")
+                if usr_in in ["y", "Y", "yes", "j", "J"]:
+                    exit()
 
-            number = ''.join(reversed(digits))
+        number_out = ''.join(reversed(digits))
 
-        if self.convert_to_dec(number) == dec_value:
-            print("success")
-            return number
+        # check if number_out actually represents the dec_value
+        if check_value == self.convert_to_dec(number_out):
+            print(f"Success! {check_value} == {self.convert_to_dec(number_out)}")
         else:
-            print(f"{self.convert_to_dec(number)} != {dec_value}")
-            print("something went wrong!")
+            print(f"malfunction!!! {check_value} != {self.convert_to_dec(number_out)}")
 
+        return number_out
 
-class Number:
-    def __init__(self, base, dec_value):
-        self.base = CustomBase(base)
-        self.dec_value = dec_value
-        self.base_value = self.base.convert_to_base(self.dec_value)
 
     def show(self):
-        return f"decimal: {self.dec_value}; {self.base.base} - base representation: {self.base_value}"
+        return f"{self.base_value} in Base {self.base} (Dezimal: {self.dec_value})"
+
+    # give back decimal value
+    def to_decimal(self):
+        return self.dec_value
 
 
 class Calculator:
     def __init__(self, calc_base=None):
         self.calc_base = calc_base
 
-    def add(self, *dec_values: int):
-        print(f"adding {[Number(self.calc_base, val).base_value for val in dec_values]} ...")
+    def add(self, *numbers: int):
+        values = [CustomBaseNumber(self.calc_base, number) for number in numbers]
 
-        result_value = sum(dec_values)
-        print(Number(self.calc_base, result_value).show())
+        print(f"adding {[value.show() for value in values]} ...")
+        result_value = sum([value.to_decimal() for value in values])
+        print(CustomBaseNumber(self.calc_base, result_value).show())
+        print("-"*12)
+
+    def show(self, number):
+        print(CustomBaseNumber(self.calc_base, number).show())
 
 
 trinary_calculator = Calculator(3)
 
-hex_calculator = Calculator(16)
+negative_trinary_calculator = Calculator(-3)
 
-binary = Calculator(2)
 
-print(Number(-3, 42).show())
-print(Number(3, 42).show())
+trinary_calculator.add(-16)
