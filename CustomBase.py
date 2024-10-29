@@ -41,11 +41,10 @@ class CustomBaseNumber:
         count = 0
         while dec_value != 0:
             count += 1
-            # Debug-Ausgabe, um die Schritte zu verfolgen
+            # show steps
             if let_me_see:
                 see_dec, see_remainder = divmod(dec_value, self.base)
                 print(f"{dec_value} // {self.base} = {see_dec} R:{see_remainder}")
-            # Division und Rest berechnen
             dec_value, remainder = divmod(dec_value, self.base)
 
             if remainder < 0:
