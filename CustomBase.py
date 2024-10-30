@@ -88,17 +88,18 @@ class Calculator:
 
         print(f"adding {[value.show() for value in values]} ...")
         result_value = sum([value.to_decimal() for value in values])
-        CustomBaseNumber(self.calc_base, result_value).show()
+        print(CustomBaseNumber(self.calc_base, result_value).show())
         print("-"*12)
 
 
-
-
-trinary_calculator = Calculator(3)
+negative_decimal_calculator = Calculator(-10)
 
 negative_trinary_calculator = Calculator(-3)
 
+negative_binary_calculator = Calculator(-2)
 
-trinary_calculator.add(16, 23)
+binary_calculator = Calculator(2)
 
-negative_trinary_calculator.add(-16, 23)
+negative_binary_calculator.add("10", "10")
+
+
