@@ -100,6 +100,6 @@ negative_binary_calculator = Calculator(-2)
 
 binary_calculator = Calculator(2)
 
-negative_binary_calculator.add("10", "10")
+negative_binary_calculator.add("11", "11")
 
 
