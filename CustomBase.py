@@ -31,7 +31,7 @@ class CustomBaseNumber:
 
         return decimal_value
 
-    def convert_to_base(self, dec_value, let_me_see=False):
+    def convert_to_base(self, dec_value, let_me_see=True):
 
         check_value = dec_value  # keep original value, to check at the end
         if dec_value == 0:
@@ -94,12 +94,13 @@ class Calculator:
 
 negative_decimal_calculator = Calculator(-10)
 
-negative_trinary_calculator = Calculator(-3)
+decimal_calc = Calculator(10)
 
 negative_binary_calculator = Calculator(-2)
 
+hex_calculator = Calculator(16)
+
 binary_calculator = Calculator(2)
 
-negative_binary_calculator.add("11", "11")
-
-
+negative_binary_calculator.add(22)
+# TODO new feature: binary_calculator.convert_to("1100101", some_base)
