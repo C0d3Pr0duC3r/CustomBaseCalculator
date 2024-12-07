@@ -1,0 +1,4 @@
+Output y0: ~x0 & ~x1
+0. {'type': 'NOT', 'input': 'x0', 'output': 'G1'}
+1. {'type': 'NOT', 'input': 'x1', 'output': 'G2'}
+2. {'type': 'AND', 'inputs': ['G1', 'G2'], 'output': 'G3'}
