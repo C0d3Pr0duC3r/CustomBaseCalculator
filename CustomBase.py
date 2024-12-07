@@ -91,7 +91,6 @@ class Calculator:
         print(CustomBaseNumber(self.calc_base, result_value).show())
         print("-"*12)
 
-
 negative_decimal_calculator = Calculator(-10)
 
 decimal_calc = Calculator(10)
