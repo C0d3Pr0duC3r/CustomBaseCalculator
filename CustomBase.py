@@ -102,5 +102,5 @@ hex_calculator = Calculator(16)
 
 binary_calculator = Calculator(2)
 
-negative_binary_calculator.add(22)
+negative_binary_calculator.add(-10)
 # TODO new feature: binary_calculator.convert_to("1100101", some_base)
