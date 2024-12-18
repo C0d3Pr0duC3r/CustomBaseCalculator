@@ -1,4 +1,48 @@
-Output y0: ~x0 | ~x1
-0. {'type': 'NAND', 'inputs': ['x0', 'x0'], 'output': 'G1'}
-1. {'type': 'NAND', 'inputs': ['x1', 'x1'], 'output': 'G2'}
-2. {'type': 'NAND', 'inputs': ['x0', 'x1'], 'output': 'G3'}
+Output y0: (x0 & x1) | (x0 & x2) | (x0 & x3) | (x1 & x2) | (x1 & x3) | (x2 & x3)
+Output y1: (x0 & x1 & ~x2) | (x0 & x2 & ~x1) | (x0 & x3 & ~x1) | (x1 & x2 & ~x3) | (x1 & x3 & ~x2) | (x2 & x3 & ~x0)
+Output y2: (x0 & x1 & x2 & ~x3) | (x0 & x1 & x3 & ~x2) | (x0 & x2 & x3 & ~x1) | (x1 & x2 & x3 & ~x0) | (x0 & ~x1 & ~x2 & ~x3) | (x1 & ~x0 & ~x2 & ~x3) | (x2 & ~x0 & ~x1 & ~x3) | (x3 & ~x0 & ~x1 & ~x2)
+0. {'type': 'AND', 'inputs': ['x0', 'x1'], 'output': 'G1'}
+1. {'type': 'AND', 'inputs': ['x0', 'x2'], 'output': 'G2'}
+2. {'type': 'AND', 'inputs': ['x0', 'x3'], 'output': 'G3'}
+3. {'type': 'AND', 'inputs': ['x1', 'x2'], 'output': 'G4'}
+4. {'type': 'AND', 'inputs': ['x1', 'x3'], 'output': 'G5'}
+5. {'type': 'AND', 'inputs': ['x2', 'x3'], 'output': 'G6'}
+6. {'type': 'OR', 'inputs': ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'], 'output': 'G7'}
+0. {'type': 'NOT', 'input': 'x2', 'output': 'G1'}
+1. {'type': 'AND', 'inputs': ['x0', 'x1', 'G1'], 'output': 'G2'}
+2. {'type': 'NOT', 'input': 'x1', 'output': 'G3'}
+3. {'type': 'AND', 'inputs': ['x0', 'x2', 'G3'], 'output': 'G4'}
+4. {'type': 'NOT', 'input': 'x1', 'output': 'G5'}
+5. {'type': 'AND', 'inputs': ['x0', 'x3', 'G5'], 'output': 'G6'}
+6. {'type': 'NOT', 'input': 'x3', 'output': 'G7'}
+7. {'type': 'AND', 'inputs': ['x1', 'x2', 'G7'], 'output': 'G8'}
+8. {'type': 'NOT', 'input': 'x2', 'output': 'G9'}
+9. {'type': 'AND', 'inputs': ['x1', 'x3', 'G9'], 'output': 'G10'}
+10. {'type': 'NOT', 'input': 'x0', 'output': 'G11'}
+11. {'type': 'AND', 'inputs': ['x2', 'x3', 'G11'], 'output': 'G12'}
+12. {'type': 'OR', 'inputs': ['G2', 'G4', 'G6', 'G8', 'G10', 'G12'], 'output': 'G13'}
+0. {'type': 'NOT', 'input': 'x3', 'output': 'G1'}
+1. {'type': 'AND', 'inputs': ['x0', 'x1', 'x2', 'G1'], 'output': 'G2'}
+2. {'type': 'NOT', 'input': 'x2', 'output': 'G3'}
+3. {'type': 'AND', 'inputs': ['x0', 'x1', 'x3', 'G3'], 'output': 'G4'}
+4. {'type': 'NOT', 'input': 'x1', 'output': 'G5'}
+5. {'type': 'AND', 'inputs': ['x0', 'x2', 'x3', 'G5'], 'output': 'G6'}
+6. {'type': 'NOT', 'input': 'x0', 'output': 'G7'}
+7. {'type': 'AND', 'inputs': ['x1', 'x2', 'x3', 'G7'], 'output': 'G8'}
+8. {'type': 'NOT', 'input': 'x1', 'output': 'G9'}
+9. {'type': 'NOT', 'input': 'x2', 'output': 'G10'}
+10. {'type': 'NOT', 'input': 'x3', 'output': 'G11'}
+11. {'type': 'AND', 'inputs': ['x0', 'G9', 'G10', 'G11'], 'output': 'G12'}
+12. {'type': 'NOT', 'input': 'x0', 'output': 'G13'}
+13. {'type': 'NOT', 'input': 'x2', 'output': 'G14'}
+14. {'type': 'NOT', 'input': 'x3', 'output': 'G15'}
+15. {'type': 'AND', 'inputs': ['x1', 'G13', 'G14', 'G15'], 'output': 'G16'}
+16. {'type': 'NOT', 'input': 'x0', 'output': 'G17'}
+17. {'type': 'NOT', 'input': 'x1', 'output': 'G18'}
+18. {'type': 'NOT', 'input': 'x3', 'output': 'G19'}
+19. {'type': 'AND', 'inputs': ['x2', 'G17', 'G18', 'G19'], 'output': 'G20'}
+20. {'type': 'NOT', 'input': 'x0', 'output': 'G21'}
+21. {'type': 'NOT', 'input': 'x1', 'output': 'G22'}
+22. {'type': 'NOT', 'input': 'x2', 'output': 'G23'}
+23. {'type': 'AND', 'inputs': ['x3', 'G21', 'G22', 'G23'], 'output': 'G24'}
+24. {'type': 'OR', 'inputs': ['G2', 'G4', 'G6', 'G8', 'G12', 'G16', 'G20', 'G24'], 'output': 'G25'}

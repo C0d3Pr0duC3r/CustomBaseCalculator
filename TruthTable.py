@@ -1,7 +1,7 @@
 import sympy as sp
 
 
-def load_truth_table(file_path="truth_table.txt"):
+def load_truth_table(file_path="truthtable.txt"):
     """Lädt die Wahrheitstabelle aus einer .txt-Datei."""
     with open(file_path, "r") as file:
         lines = file.readlines()
@@ -94,7 +94,7 @@ def save_results(file_path, expressions):
 
 
 # Pfad zur Eingabedatei
-input_file = "truth_table.txt"
+input_file = "negativbinary.txt"
 output_file = "boolean_results.txt"
 
 # Schritt 1: Wahrheitstabelle laden
